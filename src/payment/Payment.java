@@ -12,11 +12,12 @@ import java.util.Scanner;
 public class Payment implements ConsoleStep, OrderAction, Notifiable {
     private final Order order;
     private final Customer customer;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public Payment(Order order, Customer customer) {
+    public Payment(Order order, Customer customer, Scanner scanner) {
         this.order = order;
         this.customer = customer;
+        this.scanner = scanner;
     }
 
     @Override

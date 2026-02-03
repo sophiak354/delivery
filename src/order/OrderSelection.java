@@ -13,12 +13,13 @@ public class OrderSelection implements ConsoleStep, Notifiable {
     private final List<Offer> offers;
     private final Order order;
     private final Customer customer;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public OrderSelection(List<Offer> offers, Order order, Customer customer) {
+    public OrderSelection(List<Offer> offers, Order order, Customer customer, Scanner scanner) {
         this.offers = offers;
         this.order = order;
         this.customer = customer;
+        this.scanner = scanner;
     }
 
     @Override

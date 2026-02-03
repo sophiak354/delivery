@@ -9,11 +9,12 @@ import java.util.Scanner;
 public class DeliveryConfirmedGuard implements FlowGuard {
     private final Order order;
     private final DeliveryConfirmation confirmation;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public DeliveryConfirmedGuard(Order order, DeliveryConfirmation confirmation) {
+    public DeliveryConfirmedGuard(Order order, DeliveryConfirmation confirmation, Scanner scanner) {
         this.order = order;
         this.confirmation = confirmation;
+        this.scanner = scanner;
     }
 
     @Override

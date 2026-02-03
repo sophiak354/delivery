@@ -41,20 +41,20 @@ public class Main {
 
         System.out.println("Hi, " + customerName + "! Today's menu:");
 
-        ConsoleStep orderSelection = new OrderSelection(offers, order, customer);
-        FlowGuard guardOrderNotEmpty = new OrderNotEmptyGuard(order, orderSelection);
+        ConsoleStep orderSelection = new OrderSelection(offers, order, customer, scanner);
+        FlowGuard guardOrderNotEmpty = new OrderNotEmptyGuard(order, orderSelection, scanner);
 
         orderSelection.run();
         if (!guardOrderNotEmpty.allowContinue()) return;
 
-        OrderAction payment = new Payment(order, customer);
-        FlowGuard guardPaymentCompleted = new PaymentCompletedGuard(order, payment);
+        OrderAction payment = new Payment(order, customer, scanner);
+        FlowGuard guardPaymentCompleted = new PaymentCompletedGuard(order, payment, scanner);
 
         payment.execute(order);
         if (!guardPaymentCompleted.allowContinue()) return;
 
-        DeliveryConfirmation confirmation = new DeliveryConfirmation(order, customer);
-        FlowGuard guardDeliveryConfirmed = new DeliveryConfirmedGuard(order, confirmation);
+        DeliveryConfirmation confirmation = new DeliveryConfirmation(order, customer, scanner);
+        FlowGuard guardDeliveryConfirmed = new DeliveryConfirmedGuard(order, confirmation, scanner);
 
         confirmation.run();
         if (!guardDeliveryConfirmed.allowContinue()) return;

@@ -11,11 +11,12 @@ import java.util.Scanner;
 public class PaymentCompletedGuard implements FlowGuard {
     private final Order order;
     private final OrderAction payment;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public PaymentCompletedGuard(Order order, OrderAction payment) {
+    public PaymentCompletedGuard(Order order, OrderAction payment, Scanner scanner) {
         this.order = order;
         this.payment = payment;
+        this.scanner = scanner;
     }
 
     @Override

@@ -7,11 +7,12 @@ import java.util.Scanner;
 public class OrderNotEmptyGuard implements FlowGuard {
     private final Order order;
     private final ConsoleStep selectionStep;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public OrderNotEmptyGuard(Order order, ConsoleStep selectionStep) {
+    public OrderNotEmptyGuard(Order order, ConsoleStep selectionStep, Scanner scanner) {
         this.order = order;
         this.selectionStep = selectionStep;
+        this.scanner = scanner;
     }
 
     @Override
