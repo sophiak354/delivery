@@ -38,11 +38,10 @@ public class DeliveryConfirmation implements ConsoleStep, Notifiable {
                     customer.getName() + ". " + order
             );
         } else if (choice == 0) {
-            System.out.println("Confirmation is cancelled by " +
-                    customer.getName()
-            );
+            return;
         } else {
             System.out.println("Invalid input. Delivery is not confirmed.");
+            return;
         }
     }
 

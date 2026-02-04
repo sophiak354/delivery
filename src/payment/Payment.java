@@ -36,7 +36,6 @@ public class Payment implements ConsoleStep, OrderAction, Notifiable {
         double payment = scanner.nextDouble();
 
         if (payment < totalPrice) {
-            System.out.println("Payment failed. Not enough money.");
             return;
         } else if (payment > totalPrice) {
             double tips = payment - totalPrice;

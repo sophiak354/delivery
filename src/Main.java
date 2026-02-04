@@ -41,8 +41,8 @@ public class Main {
 
         System.out.println("Hi, " + customerName + "! Today's menu:");
 
-        ConsoleStep orderSelection = new OrderSelection(offers, order, customer, scanner);
-        FlowGuard guardOrderNotEmpty = new OrderNotEmptyGuard(order, orderSelection, scanner);
+        ConsoleStep orderSelection = new OrderSelection(offers, order, scanner);
+        FlowGuard guardOrderNotEmpty = new OrderNotEmptyGuard(order, orderSelection, scanner, customer);
 
         orderSelection.run();
         if (!guardOrderNotEmpty.allowContinue()) return;

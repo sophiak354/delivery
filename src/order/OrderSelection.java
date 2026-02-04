@@ -1,5 +1,7 @@
 package order;
 
+import exception.InvalidMenuSelectionException;
+import exception.InvalidQuantityException;
 import offer.Offer;
 import console.ConsoleStep;
 import role.Customer;
@@ -9,16 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class OrderSelection implements ConsoleStep, Notifiable {
+public class OrderSelection implements ConsoleStep {
     private final List<Offer> offers;
     private final Order order;
-    private final Customer customer;
     private final Scanner scanner;
 
-    public OrderSelection(List<Offer> offers, Order order, Customer customer, Scanner scanner) {
+    public OrderSelection(List<Offer> offers, Order order, Scanner scanner) {
         this.offers = offers;
         this.order = order;
-        this.customer = customer;
         this.scanner = scanner;
     }
 
@@ -35,7 +35,7 @@ public class OrderSelection implements ConsoleStep, Notifiable {
 
             if (choice == 0) break;
             if (choice < 1 || choice > menuToShow.size()) {
-                System.out.println("Invalid choice. Try again.");
+                System.out.println(new InvalidMenuSelectionException().getMessage());
                 continue;
             }
 
@@ -46,7 +46,7 @@ public class OrderSelection implements ConsoleStep, Notifiable {
             int quantity = scanner.nextInt();
 
             if (quantity <= 0) {
-                System.out.println("Quantity must be greater than 0.");
+                System.out.println(new InvalidQuantityException().getMessage());
                 continue;
             }
 
@@ -55,21 +55,9 @@ public class OrderSelection implements ConsoleStep, Notifiable {
             System.out.println(quantity + " x " + selectedOffer.getName() + " was added to your order.");
         }
 
-        if (order.calculateTotalPrice() == 0) {
-            System.out.println("Your order is empty.");
-            return;
-        }
         System.out.println("\nYour final order:");
 
         order.printOrder();
-
-        order.setStatus(OrderStatus.CREATED);
-        notifyUser("Order status is changed by " + customer.getName() + ". " + order);
-    }
-
-    @Override
-    public void notifyUser(String message) {
-        System.out.println(message);
     }
 
     private List<Offer> buildUniqueOffers() {
