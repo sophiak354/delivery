@@ -88,10 +88,8 @@ public class Main {
         finish.execute(order);
 
         System.out.println("Final order status is: " + order.getStatus());
-        System.out.println("Please rate your delivery experience (1-5):");
 
-        int rating = scanner.nextInt();
-
-        System.out.println("Thank you for your rating: " + rating);
+        DeliveryRating rating = new DeliveryRating(scanner);
+        rating.askAndPrint();
     }
 }

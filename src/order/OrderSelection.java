@@ -5,12 +5,8 @@ import exception.InvalidQuantityException;
 import offer.MenuCatalog;
 import offer.Offer;
 import console.ConsoleStep;
-import role.Customer;
-import util.Notifiable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class OrderSelection implements ConsoleStep {
     private final MenuCatalog<Offer> catalog;
@@ -62,14 +58,10 @@ public class OrderSelection implements ConsoleStep {
     }
 
     private List<Offer> buildUniqueOffers() {
-        List<Offer> uniqueOffers = new ArrayList<>();
 
-        for (Offer offer : catalog.getItems()) {
-            if (!uniqueOffers.contains(offer)) {
-                uniqueOffers.add(offer);
-            }
-        }
-        return uniqueOffers;
+        Set<Offer> uniqueOffers = new LinkedHashSet<>(catalog.getItems());
+
+        return new ArrayList<>(uniqueOffers);
     }
 
     private void printMenu(List<Offer> menuToShow) {
