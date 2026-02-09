@@ -30,6 +30,7 @@ public class DeliveryOnWay extends DeliveryStep implements Delayable {
         order.setStatus(OrderStatus.ON_THE_WAY);
         notifyUser("Order status is changed by " +
                 courier.getName() + ". " + order);
+        order.addHistory("Status changed to On The Way.");
 
         delay();
     }

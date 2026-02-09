@@ -91,5 +91,7 @@ public class Main {
 
         DeliveryRating rating = new DeliveryRating(scanner);
         rating.askAndPrint();
+
+        order.printHistory();
     }
 }

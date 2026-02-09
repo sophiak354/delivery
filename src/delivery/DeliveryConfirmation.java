@@ -37,6 +37,7 @@ public class DeliveryConfirmation implements ConsoleStep, Notifiable {
             notifyUser("Order status is changed by " +
                     customer.getName() + ". " + order
             );
+            order.addHistory("Status changed to Confirmed.");
         } else if (choice == 0) {
             return;
         } else {

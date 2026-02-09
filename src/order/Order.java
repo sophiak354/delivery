@@ -1,6 +1,7 @@
 package order;
 
 import offer.Offer;
+import util.SimpleLinkedList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class Order {
     private String status;
     private final List<OrderItem> items;
+    private final SimpleLinkedList<String> history = new SimpleLinkedList<>();
 
     public Order() {
         this.status = "Not Set";
@@ -49,6 +51,15 @@ public class Order {
     @Override
     public String toString() {
         return "Order status: " + status;
+    }
+
+    public void addHistory(String message) {
+        history.add(message);
+    }
+
+    public void printHistory() {
+        System.out.println("\nOrder history:");
+        history.printAll();
     }
 
 }

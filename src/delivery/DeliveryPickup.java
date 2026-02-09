@@ -20,6 +20,7 @@ public class DeliveryPickup extends DeliveryStep {
         order.setStatus(OrderStatus.PICKED_UP);
         notifyUser("Order status is changed by " +
                 courier.getName() + ". " + order);
+        order.addHistory("Status changed to Picked Up.");
     }
 
     @Override

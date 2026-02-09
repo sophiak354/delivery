@@ -1,8 +1,6 @@
 package console;
 
 import exception.EmptyOrderException;
-import exception.InvalidMenuSelectionException;
-import exception.InvalidQuantityException;
 import order.Order;
 import order.OrderStatus;
 import role.Customer;
@@ -40,13 +38,11 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
 
                 order.setStatus(OrderStatus.CREATED);
                 notifyUser("Order status is changed by " + customer.getName() + ". " + order);
+                order.addHistory("Status changed to Created.");
 
                 return true;
 
-            } /*catch (InvalidMenuSelectionException | InvalidQuantityException e) {
-                System.out.println(e.getMessage());
-
-            }*/ catch (EmptyOrderException e) {
+            } catch (EmptyOrderException e) {
                 System.out.println(e.getMessage());
 
                 while (true) {

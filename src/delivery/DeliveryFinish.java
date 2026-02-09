@@ -27,6 +27,7 @@ public class DeliveryFinish extends DeliveryStep {
         );
         notifyUser("Order status is changed by " +
                 courier.getName() + ". " + order);
+        order.addHistory("Status changed to Delivered.");
     }
 
     @Override
