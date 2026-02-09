@@ -2,6 +2,7 @@ import console.*;
 import delivery.*;
 import offer.Bar;
 import offer.Menu;
+import offer.MenuCatalog;
 import offer.Offer;
 import order.Order;
 import order.OrderAction;
@@ -20,13 +21,13 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        List<Offer> offers = new ArrayList<>();
-        offers.add(new Menu("Hamburger", 150.75));
-        offers.add(new Menu("Chicken nuggets", 120.50));
-        offers.add(new Menu("Salad", 80.75));
-        offers.add(new Bar("Juice", 50.99));
-        offers.add(new Bar("Coca-Cola", 80.00));
-        offers.add(new Bar("Juice", 50.99));
+        MenuCatalog<Offer> catalog = new MenuCatalog<>();
+        catalog.addItem(new Menu("Hamburger", 150.75));
+        catalog.addItem(new Menu("Chicken nuggets", 120.50));
+        catalog.addItem(new Menu("Salad", 80.75));
+        catalog.addItem(new Bar("Juice", 50.99));
+        catalog.addItem(new Bar("Coca-Cola", 80.00));
+        catalog.addItem(new Bar("Juice", 50.99));
 
         System.out.println("Enter your name:");
         String customerName = scanner.nextLine();
@@ -41,7 +42,7 @@ public class Main {
 
         System.out.println("Hi, " + customerName + "! Today's menu:");
 
-        ConsoleStep orderSelection = new OrderSelection(offers, order, scanner);
+        ConsoleStep orderSelection = new OrderSelection(catalog, order, scanner);
         FlowGuard guardOrderNotEmpty = new OrderNotEmptyGuard(order, orderSelection, scanner, customer);
 
         orderSelection.run();

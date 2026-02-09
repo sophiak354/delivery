@@ -2,6 +2,7 @@ package order;
 
 import exception.InvalidMenuSelectionException;
 import exception.InvalidQuantityException;
+import offer.MenuCatalog;
 import offer.Offer;
 import console.ConsoleStep;
 import role.Customer;
@@ -12,12 +13,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderSelection implements ConsoleStep {
-    private final List<Offer> offers;
+    private final MenuCatalog<Offer> catalog;
     private final Order order;
     private final Scanner scanner;
 
-    public OrderSelection(List<Offer> offers, Order order, Scanner scanner) {
-        this.offers = offers;
+    public OrderSelection(MenuCatalog<Offer> catalog, Order order, Scanner scanner) {
+        this.catalog = catalog;
         this.order = order;
         this.scanner = scanner;
     }
@@ -63,7 +64,7 @@ public class OrderSelection implements ConsoleStep {
     private List<Offer> buildUniqueOffers() {
         List<Offer> uniqueOffers = new ArrayList<>();
 
-        for (Offer offer : offers) {
+        for (Offer offer : catalog.getItems()) {
             if (!uniqueOffers.contains(offer)) {
                 uniqueOffers.add(offer);
             }
