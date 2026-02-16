@@ -1,0 +1,67 @@
+package com.solvd.delivery.console;
+
+import com.solvd.delivery.exception.EmptyOrderException;
+import com.solvd.delivery.order.Order;
+import com.solvd.delivery.order.OrderStatus;
+import com.solvd.delivery.role.Customer;
+import com.solvd.delivery.util.Notifiable;
+
+import java.util.Scanner;
+
+public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
+    private final Order order;
+    private final ConsoleStep selectionStep;
+    private final Scanner scanner;
+    private final Customer customer;
+
+    public OrderNotEmptyGuard(Order order, ConsoleStep selectionStep, Scanner scanner, Customer customer) {
+        this.order = order;
+        this.selectionStep = selectionStep;
+        this.scanner = scanner;
+        this.customer = customer;
+    }
+
+    @Override
+    public void notifyUser(String message) {
+        System.out.println(message);
+    }
+
+    @Override
+    public boolean allowContinue() {
+
+        while (true) {
+            try {
+
+                if (order.calculateTotalPrice() == 0) {
+                    throw new EmptyOrderException();
+                }
+
+                order.setStatus(OrderStatus.CREATED);
+                notifyUser("Order status is changed by " + customer.getName() + ". " + order);
+                order.addHistory("Status changed to Created.");
+
+                return true;
+
+            } catch (EmptyOrderException e) {
+                System.out.println(e.getMessage());
+
+                while (true) {
+                    System.out.println("Press 0 to select order again, 1 to exit:");
+
+                    int choice = scanner.nextInt();
+                    switch (choice) {
+                        case 0 -> {
+                            selectionStep.run();
+                            break;
+                        }
+                        case 1 -> {
+                            return false;
+                        }
+                        default -> System.out.println("Invalid choice. Try again.");
+                    }
+                    if (choice == 0) break;
+                }
+            }
+        }
+    }
+}
