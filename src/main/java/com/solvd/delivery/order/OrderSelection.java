@@ -25,6 +25,8 @@ public class OrderSelection implements ConsoleStep {
 
         printMenu(menuToShow);
 
+        int invalidAttempts = 0;
+
         while (true) {
             System.out.println("Enter the number of the item you want to add to order (0 to finish):");
 
@@ -32,9 +34,20 @@ public class OrderSelection implements ConsoleStep {
 
             if (choice == 0) break;
             if (choice < 1 || choice > menuToShow.size()) {
-                System.out.println(new InvalidMenuSelectionException().getMessage());
+
+                invalidAttempts++;
+
+                if (invalidAttempts >= 5) {
+                    throw new InvalidMenuSelectionException();
+                }
+
+                System.out.printf("Invalid menu option selected. Try again (you did %s attempts out of 5).\n",
+                        invalidAttempts
+                );
                 continue;
             }
+
+            invalidAttempts = 0;
 
             Offer selectedOffer = menuToShow.get(choice - 1);
 
@@ -43,8 +56,7 @@ public class OrderSelection implements ConsoleStep {
             int quantity = scanner.nextInt();
 
             if (quantity <= 0) {
-                System.out.println(new InvalidQuantityException().getMessage());
-                continue;
+                throw new InvalidQuantityException();
             }
 
             order.addItem(selectedOffer, quantity);
