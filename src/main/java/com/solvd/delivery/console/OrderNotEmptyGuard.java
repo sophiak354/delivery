@@ -29,39 +29,36 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
     @Override
     public boolean allowContinue() {
 
-        while (true) {
-            try {
+        if (order.calculateTotalPrice() == 0) {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Order selection failed.");
+                System.out.printf("Press 0 to select order again, 1 to exit (you did %s attempts out of 5): ", i);
 
-                if (order.calculateTotalPrice() == 0) {
-                    throw new EmptyOrderException();
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 0 -> {
+                        selectionStep.run();
+                    }
+                    case 1 -> {
+                        return false;
+                    }
+                    default -> System.out.println("Invalid choice. Try again.");
                 }
 
-                order.setStatus(OrderStatus.CREATED);
-                notifyUser("Order status is changed by " + customer.getName() + ". " + order);
-                order.addHistory("Status changed to Created.");
-
-                return true;
-
-            } catch (EmptyOrderException e) {
-                System.out.println(e.getMessage());
-
-                while (true) {
-                    System.out.println("Press 0 to select order again, 1 to exit:");
-
-                    int choice = scanner.nextInt();
-                    switch (choice) {
-                        case 0 -> {
-                            selectionStep.run();
-                            break;
-                        }
-                        case 1 -> {
-                            return false;
-                        }
-                        default -> System.out.println("Invalid choice. Try again.");
-                    }
-                    if (choice == 0) break;
+                if (order.calculateTotalPrice() > 0) {
+                    order.setStatus(OrderStatus.CREATED);
+                    notifyUser("Order status is changed by " + customer.getName() + ". " + order);
+                    order.addHistory("Status changed to Created.");
+                    return true;
                 }
             }
+            throw new EmptyOrderException();
         }
+
+        order.setStatus(OrderStatus.CREATED);
+        notifyUser("Order status is changed by " + customer.getName() + ". " + order);
+        order.addHistory("Status changed to Created.");
+        return true;
     }
 }

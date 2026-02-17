@@ -21,34 +21,26 @@ public class PaymentCompletedGuard implements FlowGuard {
     @Override
     public boolean allowContinue() {
 
-        while (true) {
-            try {
-                if (!order.getStatus().equals(OrderStatus.PAID)) {
-                    throw new PaymentNotCompletedException();
-                }
+        if (!order.getStatus().equals(OrderStatus.PAID)) {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Payment failed.");
+                System.out.printf("Press 0 to retry payment, 1 to exit (you did %s attempts out of 5): ", i);
 
-                return true;
+                int choice = scanner.nextInt();
 
-            } catch (PaymentNotCompletedException e) {
-                System.out.println(e.getMessage());
-
-                while (true) {
-                    System.out.println("Press 0 to retry payment, 1 to exit:");
-
-                    int choice = scanner.nextInt();
-                    switch (choice) {
-                        case 0 -> {
-                            payment.execute(order);
-                            break;
-                        }
-                        case 1 -> {
-                            return false;
-                        }
-                        default -> System.out.println("Invalid choice. Try again.");
+                switch (choice) {
+                    case 0 -> {
+                        payment.execute(order);
                     }
-                    if (choice == 0) break;
+                    case 1 -> {
+                        return false;
+                    }
+                    default -> System.out.println("Invalid choice. Try again.");
                 }
+                if (order.getStatus().equals(OrderStatus.PAID)) return true;
             }
+            throw new PaymentNotCompletedException();
         }
+        return true;
     }
 }

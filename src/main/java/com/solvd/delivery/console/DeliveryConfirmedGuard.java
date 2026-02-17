@@ -21,33 +21,26 @@ public class DeliveryConfirmedGuard implements FlowGuard {
     @Override
     public boolean allowContinue() {
 
-        while (true) {
-            try {
-                if (!order.getStatus().equals(OrderStatus.DELIVERY_CONFIRMED)) {
-                    throw new DeliveryNotConfirmedException();
-                }
-                return true;
+        if (!order.getStatus().equals(OrderStatus.DELIVERY_CONFIRMED)) {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Delivery confirmation failed.");
+                System.out.printf("Press 0 to retry confirmation, 1 to exit (you did %s attempts out of 5): ", i);
 
-            } catch (DeliveryNotConfirmedException e) {
-                System.out.println(e.getMessage());
+                int choice = scanner.nextInt();
 
-                while (true) {
-                    System.out.println("Press 0 to retry confirmation, 1 to exit:");
-
-                    int choice = scanner.nextInt();
-                    switch (choice) {
-                        case 0 -> {
-                            confirmation.run();
-                            break;
-                        }
-                        case 1 -> {
-                            return false;
-                        }
-                        default -> System.out.println("Invalid choice. Try again.");
+                switch (choice) {
+                    case 0 -> {
+                        confirmation.run();
                     }
-                    if (choice == 0) break;
+                    case 1 -> {
+                        return false;
+                    }
+                    default -> System.out.println("Invalid choice. Try again.");
                 }
+                if (order.getStatus().equals(OrderStatus.DELIVERY_CONFIRMED)) return true;
             }
+            throw new DeliveryNotConfirmedException();
         }
+        return true;
     }
 }
