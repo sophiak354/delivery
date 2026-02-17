@@ -15,6 +15,7 @@ import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.role.Restaurant;
 
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     public static void main(String[] args) {
@@ -35,12 +36,26 @@ public class Main {
         System.out.println("Enter your address:");
         String customerAddress = scanner.nextLine();
 
+        DeliveryFeeService feeService = new DeliveryFeeService();
+        double distance = ThreadLocalRandom.current().nextDouble(0, 10);
+
+        System.out.printf("Delivery distance: %.2f km%n", distance);
+
+        System.out.println("Standard fee: "
+                + feeService.calculateStandard(distance));
+        System.out.println("Express fee: "
+                + feeService.calculateExpress(distance));
+        System.out.println("Promo fee: "
+                + feeService.calculatePromo(distance));
+
+        System.out.println("\nOnline fee payment is not available now. Please, pay by cash.");
+
         Customer customer = new Customer(customerName, customerAddress);
         Restaurant restaurant = new Restaurant("Bon appetit");
         Courier courier = new Courier("Alex");
         Order order = new Order();
 
-        System.out.println("Hi, " + customerName + "! Today's menu:");
+        System.out.println("\nHi, " + customerName + "! Today's menu:");
 
         ConsoleStep orderSelection = new OrderSelection(catalog, order, scanner);
         FlowGuard guardOrderNotEmpty = new OrderNotEmptyGuard(order, orderSelection, scanner, customer);
