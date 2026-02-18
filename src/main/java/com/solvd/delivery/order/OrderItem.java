@@ -1,30 +1,9 @@
 package com.solvd.delivery.order;
 
 import com.solvd.delivery.offer.Offer;
-import com.solvd.delivery.offer.OfferType;
 
-public class OrderItem {
-    private final Offer offer;
-    private final int quantity;
-
-    public OrderItem(Offer offer, int quantity) {
-        this.offer = offer;
-        this.quantity = quantity;
-    }
-
-    public double getTotalPrice() {
+public record OrderItem(Offer offer, int quantity) {
+    public double totalPrice() {
         return offer.getPrice() * quantity;
-    }
-
-    public String getName() {
-        return offer.getName();
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public OfferType getType() {
-        return offer.getType();
     }
 }

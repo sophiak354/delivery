@@ -3,13 +3,14 @@ package com.solvd.delivery.order;
 import com.solvd.delivery.offer.Offer;
 import com.solvd.delivery.util.SimpleLinkedList;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
     private OrderStatus status;
     private final List<OrderItem> items;
-    private final SimpleLinkedList<String> history = new SimpleLinkedList<>();
+    private final SimpleLinkedList<OrderHistoryEntry> history = new SimpleLinkedList<>();
 
     public Order() {
         this.status = OrderStatus.NOT_SET;
@@ -33,7 +34,7 @@ public class Order {
         double total = 0;
 
         for (OrderItem item : items) {
-            total += item.getTotalPrice();
+            total += item.totalPrice();
         }
         return total;
     }
@@ -41,9 +42,9 @@ public class Order {
     public void printOrder() {
 
         for (OrderItem item : items) {
-            System.out.println(item.getType().offerType() + ": " + item.getName() +
-                    " x" + item.getQuantity() +
-                    " = " + item.getTotalPrice());
+            System.out.println(item.offer().getType().offerType() + ": " + item.offer().getName() +
+                    " x" + item.quantity() +
+                    " = " + item.totalPrice());
         }
         System.out.println("Total: " + calculateTotalPrice());
     }
@@ -54,7 +55,7 @@ public class Order {
     }
 
     public void addHistory(String message) {
-        history.add(message);
+        history.add(new OrderHistoryEntry(LocalDateTime.now(), message));
     }
 
     public void printHistory() {
