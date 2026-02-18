@@ -49,7 +49,7 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
                 if (order.calculateTotalPrice() > 0) {
                     order.setStatus(OrderStatus.CREATED);
                     notifyUser("Order status is changed by " + customer.getName() + ". " + order);
-                    order.addHistory("Status changed to Created.");
+                    order.addHistory("Status changed to: " + order.getStatus().status());
                     return true;
                 }
             }
@@ -58,7 +58,7 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
 
         order.setStatus(OrderStatus.CREATED);
         notifyUser("Order status is changed by " + customer.getName() + ". " + order);
-        order.addHistory("Status changed to Created.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
         return true;
     }
 }

@@ -46,7 +46,7 @@ public class Payment implements ConsoleStep, OrderAction, Notifiable {
 
         order.setStatus(OrderStatus.PAID);
         notifyUser("Order status is changed by " + customer.getName() + ". " + order);
-        order.addHistory("Status changed to Paid.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
     }
 
     @Override

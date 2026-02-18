@@ -31,7 +31,7 @@ public class Cooking extends OrderPreparation implements Delayable, Notifiable {
 
         order.setStatus(OrderStatus.COOKING);
         notifyUser("Order status is changed by " + restaurant.getName() + ". " + order);
-        order.addHistory("Status changed to Cooking.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
 
         System.out.println("Cooking is in progress...");
 
@@ -39,7 +39,7 @@ public class Cooking extends OrderPreparation implements Delayable, Notifiable {
 
         order.setStatus(OrderStatus.COOKED);
         notifyUser("Order status is changed by " + restaurant.getName() + ". " + order);
-        order.addHistory("Status changed to Cooked.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
     }
 
     @Override

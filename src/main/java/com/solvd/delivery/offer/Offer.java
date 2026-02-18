@@ -19,7 +19,7 @@ public abstract class Offer {
         return price;
     }
 
-    public abstract String getType();
+    public abstract OfferType getType();
 
     @Override
     public boolean equals(Object obj) {

@@ -81,7 +81,7 @@ public class OrderSelection implements ConsoleStep {
         for (int i = 0; i < menuToShow.size(); i++) {
             Offer offer = menuToShow.get(i);
             System.out.println((i + 1) + ". " +
-                    offer.getType() + ": " +
+                    offer.getType().offerType() + ": " +
                     offer.getName() + " - " +
                     offer.getPrice()
             );

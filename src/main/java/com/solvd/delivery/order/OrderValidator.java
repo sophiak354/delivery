@@ -2,7 +2,7 @@ package com.solvd.delivery.order;
 
 public abstract class OrderValidator {
 
-    protected boolean validateStatus(Order order, String requiredStatus, String actionName) {
+    protected boolean validateStatus(Order order, OrderStatus requiredStatus, String actionName) {
 
         if (!order.getStatus().equals(requiredStatus)) {
             System.out.println("Cannot " + actionName +

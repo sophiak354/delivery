@@ -1,6 +1,16 @@
 package com.solvd.delivery.offer;
 
-public class OfferType {
-    public static final String MENU = "Menu";
-    public static final String BAR = "Bar";
+public enum OfferType {
+    MENU("Menu"),
+    BAR("Bar");
+
+    private final String offerType;
+
+    OfferType(String offerType) {
+        this.offerType = offerType;
+    }
+
+    public String offerType() {
+        return this.offerType;
+    }
 }

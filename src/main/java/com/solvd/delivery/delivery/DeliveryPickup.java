@@ -13,14 +13,14 @@ public class DeliveryPickup extends DeliveryStep {
     @Override
     public void doStep(Order order) {
 
-        if (!validateStatus(order, "Packed", "pick up order")) {
+        if (!validateStatus(order, OrderStatus.PACKED, "pick up order")) {
             return;
         }
 
         order.setStatus(OrderStatus.PICKED_UP);
         notifyUser("Order status is changed by " +
                 courier.getName() + ". " + order);
-        order.addHistory("Status changed to Picked Up.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
     }
 
     @Override

@@ -16,7 +16,7 @@ public class DeliveryFinish extends DeliveryStep {
     @Override
     public void doStep(Order order) {
 
-        if (!validateStatus(order, "On the way", "finish delivering")) {
+        if (!validateStatus(order, OrderStatus.ON_THE_WAY, "finish delivering")) {
             return;
         }
 
@@ -27,7 +27,7 @@ public class DeliveryFinish extends DeliveryStep {
         );
         notifyUser("Order status is changed by " +
                 courier.getName() + ". " + order);
-        order.addHistory("Status changed to Delivered.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
     }
 
     @Override

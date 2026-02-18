@@ -23,14 +23,14 @@ public class DeliveryOnWay extends DeliveryStep implements Delayable {
     @Override
     public void doStep(Order order) {
 
-        if (!validateStatus(order, "Picked up", "start delivery")) {
+        if (!validateStatus(order, OrderStatus.PICKED_UP, "start delivery")) {
             return;
         }
 
         order.setStatus(OrderStatus.ON_THE_WAY);
         notifyUser("Order status is changed by " +
                 courier.getName() + ". " + order);
-        order.addHistory("Status changed to On The Way.");
+        order.addHistory("Status changed to: " + order.getStatus().status());
 
         delay();
     }

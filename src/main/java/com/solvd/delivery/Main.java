@@ -75,6 +75,7 @@ public class Main {
         confirmation.run();
         if (!guardDeliveryConfirmed.allowContinue()) return;
 
+        scanner.nextLine();
         System.out.println("Press Enter to continue to cooking...");
         scanner.nextLine();
 
@@ -102,7 +103,7 @@ public class Main {
         OrderAction finish = new DeliveryFinish(courier, order, customer);
         finish.execute(order);
 
-        System.out.println("Final order status is: " + order.getStatus());
+        System.out.println("Final order status is: " + order.getStatus().status());
 
         DeliveryRating rating = new DeliveryRating(scanner);
         rating.askAndPrint();

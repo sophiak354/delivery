@@ -7,7 +7,7 @@ public class Menu extends Offer {
     }
 
     @Override
-    public String getType() {
+    public OfferType getType() {
         return OfferType.MENU;
     }
 }

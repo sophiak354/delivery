@@ -7,20 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private String status;
+    private OrderStatus status;
     private final List<OrderItem> items;
     private final SimpleLinkedList<String> history = new SimpleLinkedList<>();
 
     public Order() {
-        this.status = "Not Set";
+        this.status = OrderStatus.NOT_SET;
         this.items = new ArrayList<>();
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
@@ -41,7 +41,7 @@ public class Order {
     public void printOrder() {
 
         for (OrderItem item : items) {
-            System.out.println(item.getType() + ": " + item.getName() +
+            System.out.println(item.getType().offerType() + ": " + item.getName() +
                     " x" + item.getQuantity() +
                     " = " + item.getTotalPrice());
         }
@@ -50,7 +50,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order status: " + status;
+        return "Order status: " + status.status();
     }
 
     public void addHistory(String message) {

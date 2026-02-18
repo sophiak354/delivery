@@ -1,6 +1,7 @@
 package com.solvd.delivery.order;
 
 import com.solvd.delivery.offer.Offer;
+import com.solvd.delivery.offer.OfferType;
 
 public class OrderItem {
     private final Offer offer;
@@ -23,7 +24,7 @@ public class OrderItem {
         return quantity;
     }
 
-    public String getType() {
+    public OfferType getType() {
         return offer.getType();
     }
 }
