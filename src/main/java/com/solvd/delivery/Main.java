@@ -16,8 +16,12 @@ import com.solvd.delivery.role.Restaurant;
 
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -103,7 +107,7 @@ public class Main {
         OrderAction finish = new DeliveryFinish(courier, order, customer);
         finish.execute(order);
 
-        System.out.println("Final order status is: " + order.getStatus().status());
+        logger.info("Final order status is: {}", order.getStatus().status());
 
         DeliveryRating rating = new DeliveryRating(scanner);
         rating.askAndPrint();

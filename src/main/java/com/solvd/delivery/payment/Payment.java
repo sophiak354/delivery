@@ -4,12 +4,16 @@ import com.solvd.delivery.order.Order;
 import com.solvd.delivery.console.ConsoleStep;
 import com.solvd.delivery.order.OrderAction;
 import com.solvd.delivery.order.OrderStatus;
+import com.solvd.delivery.order.OrderValidator;
 import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.util.Notifiable;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Payment implements ConsoleStep, OrderAction, Notifiable {
+public class Payment extends OrderValidator implements ConsoleStep, OrderAction, Notifiable {
+    private static final Logger logger = LogManager.getLogger(Payment.class);
     private final Order order;
     private final Customer customer;
     private final Scanner scanner;
@@ -23,8 +27,7 @@ public class Payment implements ConsoleStep, OrderAction, Notifiable {
     @Override
     public void run() {
 
-        if (order.getStatus() != OrderStatus.CREATED) {
-            System.out.println("Payment is not allowed. Order is not in Created status.");
+        if (!validateStatus(order, OrderStatus.CREATED, "start payment")) {
             return;
         }
 
@@ -56,6 +59,6 @@ public class Payment implements ConsoleStep, OrderAction, Notifiable {
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }

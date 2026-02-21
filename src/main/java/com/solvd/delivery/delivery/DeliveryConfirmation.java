@@ -3,12 +3,16 @@ package com.solvd.delivery.delivery;
 import com.solvd.delivery.console.ConsoleStep;
 import com.solvd.delivery.order.Order;
 import com.solvd.delivery.order.OrderStatus;
+import com.solvd.delivery.order.OrderValidator;
 import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.util.Notifiable;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class DeliveryConfirmation implements ConsoleStep, Notifiable {
+public class DeliveryConfirmation extends OrderValidator implements ConsoleStep, Notifiable {
+    private static final Logger logger = LogManager.getLogger(DeliveryConfirmation.class);
     private final Order order;
     private final Customer customer;
     private final Scanner scanner;
@@ -22,8 +26,11 @@ public class DeliveryConfirmation implements ConsoleStep, Notifiable {
     @Override
     public void run() {
 
-        if (order.getStatus() != OrderStatus.PAID) {
-            System.out.println("Delivery cannot be confirmed. Order is not paid.");
+//        if (order.getStatus() != OrderStatus.PAID) {
+//            logger.info("Delivery cannot be confirmed. Order is not paid.");
+//            return;
+//        }
+        if (!validateStatus(order, OrderStatus.PAID, "confirm delivery")) {
             return;
         }
 
@@ -41,13 +48,13 @@ public class DeliveryConfirmation implements ConsoleStep, Notifiable {
         } else if (choice == 0) {
             return;
         } else {
-            System.out.println("Invalid input. Delivery is not confirmed.");
+            logger.warn("Invalid input.");
             return;
         }
     }
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }

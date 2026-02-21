@@ -6,8 +6,11 @@ import com.solvd.delivery.order.OrderAction;
 import com.solvd.delivery.order.OrderStatus;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PaymentCompletedGuard implements FlowGuard {
+    private static final Logger logger = LogManager.getLogger(PaymentCompletedGuard.class);
     private final Order order;
     private final OrderAction payment;
     private final Scanner scanner;
@@ -23,7 +26,7 @@ public class PaymentCompletedGuard implements FlowGuard {
 
         if (!order.getStatus().equals(OrderStatus.PAID)) {
             for (int i = 0; i < 5; i++) {
-                System.out.println("Payment failed.");
+                logger.warn("Payment failed.");
                 System.out.printf("Press 0 to retry payment, 1 to exit (you did %s attempts out of 5): ", i);
 
                 int choice = scanner.nextInt();
@@ -35,10 +38,11 @@ public class PaymentCompletedGuard implements FlowGuard {
                     case 1 -> {
                         return false;
                     }
-                    default -> System.out.println("Invalid choice. Try again.");
+                    default -> logger.warn("Invalid choice. Try again.");
                 }
                 if (order.getStatus().equals(OrderStatus.PAID)) return true;
             }
+            logger.error("Payment is not completed.");
             throw new PaymentNotCompletedException();
         }
         return true;

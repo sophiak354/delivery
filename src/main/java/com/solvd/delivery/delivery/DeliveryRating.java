@@ -3,8 +3,11 @@ package com.solvd.delivery.delivery;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeliveryRating {
+    private static final Logger logger = LogManager.getLogger(DeliveryRating.class);
     private final Scanner scanner;
     private final Map<Integer, String> labels = new HashMap<>();
 
@@ -27,7 +30,7 @@ public class DeliveryRating {
             String text = labels.get(rating);
 
             if (text == null) {
-                System.out.println("Invalid rating. Try again.");
+                logger.warn("Invalid rating. Try again.");
                 continue;
             }
 

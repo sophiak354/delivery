@@ -7,8 +7,11 @@ import com.solvd.delivery.offer.Offer;
 import com.solvd.delivery.console.ConsoleStep;
 
 import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class OrderSelection implements ConsoleStep {
+    private static final Logger logger = LogManager.getLogger(OrderSelection.class);
     private final MenuCatalog<Offer> catalog;
     private final Order order;
     private final Scanner scanner;
@@ -38,10 +41,10 @@ public class OrderSelection implements ConsoleStep {
                 invalidAttempts++;
 
                 if (invalidAttempts >= 5) {
+                    logger.error("Too many attempts.");
                     throw new InvalidMenuSelectionException();
                 }
-
-                System.out.printf("Invalid menu option selected. Try again (you did %s attempts out of 5).\n",
+                logger.warn("Invalid menu option selected. Try again ({} attempts out of 5).\n",
                         invalidAttempts
                 );
                 continue;
@@ -56,6 +59,7 @@ public class OrderSelection implements ConsoleStep {
             int quantity = scanner.nextInt();
 
             if (quantity <= 0) {
+                logger.error("Quantity is less or equal to zero.");
                 throw new InvalidQuantityException();
             }
 

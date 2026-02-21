@@ -5,7 +5,11 @@ import com.solvd.delivery.order.OrderStatus;
 import com.solvd.delivery.role.Courier;
 import com.solvd.delivery.role.Customer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DeliveryFinish extends DeliveryStep {
+    private static final Logger logger = LogManager.getLogger(DeliveryFinish.class);
     private final Customer customer;
 
     public DeliveryFinish(Courier courier, Order order, Customer customer) {
@@ -32,6 +36,6 @@ public class DeliveryFinish extends DeliveryStep {
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }

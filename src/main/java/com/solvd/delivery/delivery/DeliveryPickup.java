@@ -4,7 +4,11 @@ import com.solvd.delivery.order.Order;
 import com.solvd.delivery.order.OrderStatus;
 import com.solvd.delivery.role.Courier;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DeliveryPickup extends DeliveryStep {
+    private static final Logger logger = LogManager.getLogger(DeliveryPickup.class);
 
     public DeliveryPickup(Courier courier, Order order) {
         super(courier, order);
@@ -25,6 +29,6 @@ public class DeliveryPickup extends DeliveryStep {
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }

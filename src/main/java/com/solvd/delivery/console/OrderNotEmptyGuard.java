@@ -7,8 +7,11 @@ import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.util.Notifiable;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
+    private static final Logger logger = LogManager.getLogger(OrderNotEmptyGuard.class);
     private final Order order;
     private final ConsoleStep selectionStep;
     private final Scanner scanner;
@@ -23,7 +26,7 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
 
         if (order.calculateTotalPrice() == 0) {
             for (int i = 0; i < 5; i++) {
-                System.out.println("Order selection failed.");
+                logger.warn("Order selection failed.");
                 System.out.printf("Press 0 to select order again, 1 to exit (you did %s attempts out of 5): ", i);
 
                 int choice = scanner.nextInt();
@@ -43,7 +46,7 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
                     case 1 -> {
                         return false;
                     }
-                    default -> System.out.println("Invalid choice. Try again.");
+                    default -> logger.warn("Invalid choice. Try again.");
                 }
 
                 if (order.calculateTotalPrice() > 0) {
@@ -53,6 +56,7 @@ public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
                     return true;
                 }
             }
+            logger.error("Order selection is not completed.");
             throw new EmptyOrderException();
         }
 

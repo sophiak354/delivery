@@ -7,7 +7,11 @@ import com.solvd.delivery.role.Restaurant;
 import com.solvd.delivery.util.Delayable;
 import com.solvd.delivery.util.Notifiable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Cooking extends OrderPreparation implements Delayable, Notifiable {
+    private static final Logger logger = LogManager.getLogger(Cooking.class);
 
     public Cooking(Restaurant restaurant, Order order) {
         super(restaurant, order);
@@ -44,6 +48,6 @@ public class Cooking extends OrderPreparation implements Delayable, Notifiable {
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }

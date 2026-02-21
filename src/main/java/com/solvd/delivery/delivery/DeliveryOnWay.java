@@ -5,7 +5,11 @@ import com.solvd.delivery.order.OrderStatus;
 import com.solvd.delivery.role.Courier;
 import com.solvd.delivery.util.Delayable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DeliveryOnWay extends DeliveryStep implements Delayable {
+    private static final Logger logger = LogManager.getLogger(DeliveryOnWay.class);
 
     public DeliveryOnWay(Courier courier, Order order) {
         super(courier, order);
@@ -37,6 +41,6 @@ public class DeliveryOnWay extends DeliveryStep implements Delayable {
 
     @Override
     public void notifyUser(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }

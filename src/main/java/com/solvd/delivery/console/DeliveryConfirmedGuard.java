@@ -6,8 +6,11 @@ import com.solvd.delivery.order.Order;
 import com.solvd.delivery.order.OrderStatus;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeliveryConfirmedGuard implements FlowGuard {
+    private static final Logger logger = LogManager.getLogger(DeliveryConfirmedGuard.class);
     private final Order order;
     private final DeliveryConfirmation confirmation;
     private final Scanner scanner;
@@ -23,7 +26,7 @@ public class DeliveryConfirmedGuard implements FlowGuard {
 
         if (!order.getStatus().equals(OrderStatus.DELIVERY_CONFIRMED)) {
             for (int i = 0; i < 5; i++) {
-                System.out.println("Delivery confirmation failed.");
+                logger.warn("Delivery confirmation failed.");
                 System.out.printf("Press 0 to retry confirmation, 1 to exit (you did %s attempts out of 5): ", i);
 
                 int choice = scanner.nextInt();
@@ -35,10 +38,11 @@ public class DeliveryConfirmedGuard implements FlowGuard {
                     case 1 -> {
                         return false;
                     }
-                    default -> System.out.println("Invalid choice. Try again.");
+                    default -> logger.warn("Invalid choice. Try again.");
                 }
                 if (order.getStatus().equals(OrderStatus.DELIVERY_CONFIRMED)) return true;
             }
+            logger.error("Delivery is not confirmed.");
             throw new DeliveryNotConfirmedException();
         }
         return true;
