@@ -2,6 +2,7 @@ package com.solvd.delivery;
 
 import com.solvd.delivery.console.*;
 import com.solvd.delivery.delivery.*;
+import com.solvd.delivery.fileutil.WordCounter;
 import com.solvd.delivery.offer.Bar;
 import com.solvd.delivery.offer.Menu;
 import com.solvd.delivery.offer.MenuCatalog;
@@ -14,6 +15,8 @@ import com.solvd.delivery.role.Courier;
 import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.role.Restaurant;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.logging.log4j.LogManager;
@@ -22,9 +25,18 @@ import org.apache.logging.log4j.Logger;
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Word Counter - Enter word #1: ");
+        String wordOne = scanner.nextLine();
+        System.out.print("Word Counter - Enter word #2: ");
+        String wordTwo = scanner.nextLine();
+        System.out.print("Word Counter - Enter word #3: ");
+        String wordThree = scanner.nextLine();
+
+        WordCounter.countWords(List.of(wordOne, wordTwo, wordThree));
 
         MenuCatalog<Offer> catalog = new MenuCatalog<>();
         catalog.addItem(new Menu("Hamburger", 150.75));
