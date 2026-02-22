@@ -1,23 +1,15 @@
 package com.solvd.delivery.offer;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Objects;
 
+@AllArgsConstructor
+@Getter
 public abstract class Offer {
     private final String name;
     private final double price;
-
-    public Offer(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
 
     public abstract OfferType getType();
 

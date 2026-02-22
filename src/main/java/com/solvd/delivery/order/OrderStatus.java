@@ -1,5 +1,8 @@
 package com.solvd.delivery.order;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public enum OrderStatus {
 
     NOT_SET("Not Set"),
@@ -25,10 +28,6 @@ public enum OrderStatus {
     DELIVERED("Delivered");
 
     private final String status;
-
-    OrderStatus(String status) {
-        this.status = status;
-    }
 
     public String status() {
         return this.status;

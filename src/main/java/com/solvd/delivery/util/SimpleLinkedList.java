@@ -2,8 +2,8 @@ package com.solvd.delivery.util;
 
 public class SimpleLinkedList<T> {
     private static class Node<T> {
-        T data;
-        Node<T> next;
+        private final T data;
+        private Node<T> next;
 
         Node(T data) {
             this.data = data;

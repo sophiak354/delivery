@@ -7,22 +7,18 @@ import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.util.Notifiable;
 
 import java.util.Scanner;
+
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@RequiredArgsConstructor
 public class OrderNotEmptyGuard implements FlowGuard, Notifiable {
     private static final Logger logger = LogManager.getLogger(OrderNotEmptyGuard.class);
     private final Order order;
     private final ConsoleStep selectionStep;
     private final Scanner scanner;
     private final Customer customer;
-
-    public OrderNotEmptyGuard(Order order, ConsoleStep selectionStep, Scanner scanner, Customer customer) {
-        this.order = order;
-        this.selectionStep = selectionStep;
-        this.scanner = scanner;
-        this.customer = customer;
-    }
 
     @Override
     public void notifyUser(String message) {

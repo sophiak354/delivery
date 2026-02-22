@@ -1,14 +1,14 @@
 package com.solvd.delivery.offer;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public enum OfferType {
     MENU("Menu"),
     BAR("Bar");
 
     private final String offerType;
-
-    OfferType(String offerType) {
-        this.offerType = offerType;
-    }
 
     public String offerType() {
         return this.offerType;

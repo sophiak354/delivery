@@ -2,11 +2,15 @@ package com.solvd.delivery.order;
 
 import com.solvd.delivery.offer.Offer;
 import com.solvd.delivery.util.SimpleLinkedList;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class Order {
     private OrderStatus status;
     private final List<OrderItem> items;
@@ -15,14 +19,6 @@ public class Order {
     public Order() {
         this.status = OrderStatus.NOT_SET;
         this.items = new ArrayList<>();
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
     }
 
     public void addItem(Offer offer, int quantity) {

@@ -7,20 +7,17 @@ import com.solvd.delivery.offer.Offer;
 import com.solvd.delivery.console.ConsoleStep;
 
 import java.util.*;
+
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@RequiredArgsConstructor
 public class OrderSelection implements ConsoleStep {
     private static final Logger logger = LogManager.getLogger(OrderSelection.class);
     private final MenuCatalog<Offer> catalog;
     private final Order order;
     private final Scanner scanner;
-
-    public OrderSelection(MenuCatalog<Offer> catalog, Order order, Scanner scanner) {
-        this.catalog = catalog;
-        this.order = order;
-        this.scanner = scanner;
-    }
 
     @Override
     public void run() {

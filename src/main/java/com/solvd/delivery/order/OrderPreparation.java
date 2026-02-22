@@ -1,15 +1,12 @@
 package com.solvd.delivery.order;
 
 import com.solvd.delivery.role.Restaurant;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public abstract class OrderPreparation extends OrderValidator implements OrderAction {
     protected final Restaurant restaurant;
     protected final Order order;
-
-    public OrderPreparation(Restaurant restaurant, Order order) {
-        this.restaurant = restaurant;
-        this.order = order;
-    }
 
     public abstract void prepare(Order order);
 

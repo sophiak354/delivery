@@ -8,28 +8,21 @@ import com.solvd.delivery.role.Customer;
 import com.solvd.delivery.util.Notifiable;
 
 import java.util.Scanner;
+
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@RequiredArgsConstructor
 public class DeliveryConfirmation extends OrderValidator implements ConsoleStep, Notifiable {
     private static final Logger logger = LogManager.getLogger(DeliveryConfirmation.class);
     private final Order order;
     private final Customer customer;
     private final Scanner scanner;
 
-    public DeliveryConfirmation(Order order, Customer customer, Scanner scanner) {
-        this.order = order;
-        this.customer = customer;
-        this.scanner = scanner;
-    }
-
     @Override
     public void run() {
 
-//        if (order.getStatus() != OrderStatus.PAID) {
-//            logger.info("Delivery cannot be confirmed. Order is not paid.");
-//            return;
-//        }
         if (!validateStatus(order, OrderStatus.PAID, "confirm delivery")) {
             return;
         }
