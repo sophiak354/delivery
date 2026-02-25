@@ -6,7 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WordCounter {
     public static void countWords(List<String> words) throws IOException {
@@ -17,18 +19,16 @@ public class WordCounter {
 
         String[] tokens = StringUtils.split(text, " \n\r\t.,!?;:\"()[]");
 
-        StringBuilder result = new StringBuilder();
-
-        for (String word : words) {
-            int count = 0;
-
-            for (String token : tokens) {
-                if (token.equals(word.toLowerCase()) || token.equals(word.toLowerCase() + "'s")) {
-                    count++;
-                }
-            }
-            result.append(word).append(" - ").append(count).append("\n");
-        }
-        FileUtils.writeStringToFile(out, result.toString(), StandardCharsets.UTF_8, true);
+        String result = words.stream()
+                .map(word -> {
+                    long count = Arrays.stream(tokens)
+                            .filter(token ->
+                                    token.equals(word.toLowerCase())
+                                            || token.equals(word.toLowerCase() + "'s"))
+                            .count();
+                    return word + " - " + count;
+                })
+                .collect(Collectors.joining("\n", "", "\n"));
+        FileUtils.writeStringToFile(out, result, StandardCharsets.UTF_8, true);
     }
 }

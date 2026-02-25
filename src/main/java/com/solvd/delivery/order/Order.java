@@ -2,6 +2,7 @@ package com.solvd.delivery.order;
 
 import com.solvd.delivery.offer.Offer;
 import com.solvd.delivery.util.SimpleLinkedList;
+import com.solvd.delivery.util.reflection.DefaultValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +13,12 @@ import java.util.List;
 @Getter
 @Setter
 public class Order {
+    @DefaultValue("NOT_SET")
     private OrderStatus status;
     private final List<OrderItem> items;
     private final SimpleLinkedList<OrderHistoryEntry> history = new SimpleLinkedList<>();
 
     public Order() {
-        this.status = OrderStatus.NOT_SET;
         this.items = new ArrayList<>();
     }
 
@@ -27,21 +28,20 @@ public class Order {
     }
 
     public double calculateTotalPrice() {
-        double total = 0;
-
-        for (OrderItem item : items) {
-            total += item.totalPrice();
-        }
-        return total;
+        return items.stream()
+                .mapToDouble(OrderItem::totalPrice)
+                .sum();
     }
 
     public void printOrder() {
-
-        for (OrderItem item : items) {
-            System.out.println(item.offer().getType().offerType() + ": " + item.offer().getName() +
-                    " x" + item.quantity() +
-                    " = " + item.totalPrice());
-        }
+        items.forEach(item ->
+                        System.out.println(
+                                item.offer().getType().offerType() + ": "
+                                        + item.offer().getName()
+                                        + " x" + item.quantity()
+                                        + " = " + item.totalPrice()
+                        )
+                );
         System.out.println("Total: " + calculateTotalPrice());
     }
 

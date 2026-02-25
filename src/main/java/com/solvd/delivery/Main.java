@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+
+import com.solvd.delivery.util.reflection.ReflectionUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -64,12 +66,16 @@ public class Main {
         System.out.println("Promo fee: "
                 + feeService.calculatePromo(distance));
 
-        System.out.println("\nOnline fee payment is not available now. Please, pay by cash.");
+        System.out.println("\nOnline fee payment is not available now. Please, pay by cash.\n");
 
         Customer customer = new Customer(customerName, customerAddress);
         Restaurant restaurant = new Restaurant("Bon appetit");
         Courier courier = new Courier("Alex");
-        Order order = new Order();
+
+        Order order = ReflectionUtil.initWithDefaults(Order.class);
+
+        logger.info("Order status is: {}", order.getStatus().status());
+        order.addHistory("Status changed to: " + order.getStatus().status());
 
         System.out.println("\nHi, " + customerName + "! Today's menu:");
 

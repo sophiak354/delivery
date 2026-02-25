@@ -7,6 +7,7 @@ import com.solvd.delivery.offer.Offer;
 import com.solvd.delivery.console.ConsoleStep;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -79,13 +80,15 @@ public class OrderSelection implements ConsoleStep {
 
     private void printMenu(List<Offer> menuToShow) {
 
-        for (int i = 0; i < menuToShow.size(); i++) {
-            Offer offer = menuToShow.get(i);
-            System.out.println((i + 1) + ". " +
-                    offer.getType().offerType() + ": " +
-                    offer.getName() + " - " +
-                    offer.getPrice()
-            );
-        }
+        IntStream.range(0, menuToShow.size())
+                .forEach(i -> {
+                            Offer offer = menuToShow.get(i);
+                            System.out.println((i + 1) + ". "
+                                    + offer.getType().offerType() + ": "
+                                    + offer.getName() + " - "
+                                    + offer.getPrice()
+                            );
+                        }
+                );
     }
 }
