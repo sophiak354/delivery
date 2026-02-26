@@ -3,6 +3,7 @@ package com.solvd.delivery;
 import com.solvd.delivery.console.*;
 import com.solvd.delivery.delivery.*;
 import com.solvd.delivery.fileutil.WordCounter;
+import com.solvd.delivery.multithreading.ThreadMain;
 import com.solvd.delivery.offer.Bar;
 import com.solvd.delivery.offer.Menu;
 import com.solvd.delivery.offer.MenuCatalog;
@@ -39,6 +40,10 @@ public class Main {
         String wordThree = scanner.nextLine();
 
         WordCounter.countWords(List.of(wordOne, wordTwo, wordThree));
+
+        System.out.println("\n--- Singleton Threads Demo ---");
+        ThreadMain.runSingletonThreadsDemo(20);
+        System.out.println("--- End Demo ---\n");
 
         MenuCatalog<Offer> catalog = new MenuCatalog<>();
         catalog.addItem(new Menu("Hamburger", 150.75));
